@@ -1,0 +1,7 @@
+# build directory
+/build
+
+# generated files
+/src/dummy_funcs.h
+/src/dummy_funcs.cc
+/src/simple_example.cc
