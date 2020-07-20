@@ -378,6 +378,8 @@ void ReorderBasicBlocks::runOnFunctions(BinaryContext &BC) {
 
 void ReorderBasicBlocks::modifyFunctionLayout(BinaryFunction &BF,
     LayoutType Type, bool MinBranchClusters) const {
+  DEBUG(dbgs() << "Modify function layout: type=" << Type
+      << ", minBranch=" << MinBranchClusters << "\n");
   if (BF.size() == 0 || Type == LT_NONE)
     return;
 

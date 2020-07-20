@@ -107,6 +107,8 @@ void SplitFunctions::runOnFunctions(BinaryContext &BC) {
   }
 }
 
+// 1. mark 1) first BB,  2) BB w/ sample count > 0, as cannot outline
+// 2. sort BBs marked as can outline to the end of function
 void SplitFunctions::splitFunction(BinaryFunction &BF) {
   if (!BF.size())
     return;

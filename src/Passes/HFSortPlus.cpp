@@ -217,6 +217,12 @@ public:
       return GainCache.get(ClusterPred, ClusterSucc);
     }
 
+    // cluster samples count total call count into each func/node of a cluster
+    // then exclude short calls:
+    // * 0 call distance counted as 1
+    // * TLBPage-sized call distance counted as 0
+    // TLB miss probability calculated as function of page sample / total sample
+
     // cache misses on the first cluster
     double LongCallsPred = ClusterPred->samples() - shortCalls(ClusterPred);
     double ProbPred = missProbability(ClusterPred->density() * ITLBPageSize);
@@ -376,6 +382,7 @@ public:
                        "loop edges are not supported");
 
                 // compute the gain of merging two clusters
+                // i.e. TLB miss difference by merging
                 const double Gain = mergeGain(ClusterPred, ClusterSucc);
 
                 // create a new candidate
@@ -442,6 +449,7 @@ public:
                  << "\n");
 
     // Pass 1
+    // merge pairs of functions calling each other
     runPassOne();
 
     // Pass 2

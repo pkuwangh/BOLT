@@ -434,12 +434,14 @@ void BinaryFunctionPassManager::runAllPasses(BinaryContext &BC) {
 
   Manager.registerPass(llvm::make_unique<PLTCall>(PrintPLT));
 
+  // in Passes/BinaryPasses.h/cpp
   Manager.registerPass(llvm::make_unique<ReorderBasicBlocks>(PrintReordered));
 
   Manager.registerPass(
     llvm::make_unique<EliminateUnreachableBlocks>(PrintUCE),
     opts::EliminateUnreachable);
 
+  // in Passes/SplitFunctions.h/cpp
   Manager.registerPass(llvm::make_unique<SplitFunctions>(PrintSplit));
 
   // This pass syncs local branches with CFG. If any of the following
@@ -447,6 +449,7 @@ void BinaryFunctionPassManager::runAllPasses(BinaryContext &BC) {
   // fix branches consistency internally.
   Manager.registerPass(llvm::make_unique<FixupBranches>(PrintAfterBranchFixup));
 
+  // in Passes/HFSort.h & HFSortPlus.cpp
   // This pass should come close to last since it uses the estimated hot
   // size of a function to determine the order.  It should definitely
   // also happen after any changes to the call graph are made, e.g. inlining.

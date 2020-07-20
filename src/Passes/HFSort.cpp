@@ -90,6 +90,8 @@ std::string Cluster::toString() const {
 
 namespace {
 
+// sort clusters based on density
+// freeze top clusters, stop once N huge pages filled up
 void freezeClusters(const CallGraph &Cg, std::vector<Cluster> &Clusters) {
   uint32_t TotalSize = 0;
   std::sort(Clusters.begin(), Clusters.end(), compareClustersDensity);
@@ -130,6 +132,9 @@ void Cluster::clear() {
   Frozen = false;
 }
 
+// given a CallGraph, sort based on density & freeze top functions
+// for each node, try to merge with its most likely predecessor
+// return clusters that are not merged
 std::vector<Cluster> clusterize(const CallGraph &Cg) {
   std::vector<NodeId> SortedFuncs;
 

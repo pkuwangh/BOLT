@@ -8,6 +8,9 @@
 #undef  DEBUG_TYPE
 #define DEBUG_TYPE "hfsort"
 
+// function ordering algorithm
+// Profile guided code positioning by Pettis & Hansen on PLDI-1990
+
 namespace llvm {
 namespace bolt {
 

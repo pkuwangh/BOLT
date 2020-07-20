@@ -42,9 +42,14 @@
 #include <string>
 #include <vector>
 
+// function ordering
+// HFSort+ by Ottoni & Masher on CGO-2017
+
 namespace llvm {
 namespace bolt {
 
+// cluster functions
+// functions saved in Targets as NodeIds
 class Cluster {
 public:
   Cluster(CallGraph::NodeId Id, const CallGraph::Node &F);
@@ -97,11 +102,15 @@ inline bool compareClustersDensity(const Cluster &C1, const Cluster &C2) {
 
 /*
  * Cluster functions in order to minimize call distance.
+ * sort based on density, freeze top hot functions
+ * try to merge with each node's most likely predecessor
  */
 std::vector<Cluster> clusterize(const CallGraph &Cg);
 
 /*
  * Optimize function placement for iTLB cache and i-cache.
+ * first, merge pair of clusters calling each other with high probability
+ * second, pick pair of clusters to merge based on the gain, TLB miss by long calls
  */
 std::vector<Cluster> hfsortPlus(CallGraph &Cg, bool UseGainCache = true);
 
