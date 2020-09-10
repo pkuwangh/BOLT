@@ -1,7 +1,6 @@
 add_executable(simple_example
   dummy_funcs.cc
   simple_example.cc
-  utils.cc
 )
 
 target_compile_options(simple_example PUBLIC -Wall -m64 -O2)

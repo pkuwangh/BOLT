@@ -38,7 +38,7 @@ def write_hh(args):
         with open("dummy_funcs.template.h", "rt") as fin:
             fout.writelines(fin.readlines())
         fout.writelines(lines)
-        fout.write("#endif")
+        fout.write("\n#endif")
 
 
 def write_cc(args):
@@ -100,9 +100,9 @@ def write_main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("--num", "-n", required=True, type=int,
+    parser.add_argument("--num", "-n", required=True, type=int, default=2,
         help="number of groups of hot/mix functions")
-    parser.add_argument("--ratio", "-r", required=True, type=int,
+    parser.add_argument("--ratio", "-r", required=True, type=int, default=2,
         help="ratio of cold function to hot/mix functions")
 
     args = parser.parse_args()
